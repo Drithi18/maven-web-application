@@ -1,0 +1,21 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: superhero
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+
+    - name: Deploy to Tomcat
+      run: |
+        # Copy the .war file to the Tomcat webapps directory
+        docker cp target/maven-web-application.war mycon:/usr/local/tomcat/webapps/
